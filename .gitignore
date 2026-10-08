@@ -1,0 +1,8 @@
+node_modules/
+charter-report/
+snapshot*.json
+demo-data/
+.data/
+.env
+*.log
+.DS_Store
