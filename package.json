@@ -1,0 +1,33 @@
+{
+  "name": "librechat-charter-diagnostic",
+  "version": "0.1.1",
+  "description": "Tests a LibreChat deployment against the Delegation Charter Specification: every agent against the eight pillars, the deployment against conformance Levels 1-3, with observe-only plugin hooks.",
+  "license": "MIT",
+  "author": "Almma.AI",
+  "homepage": "https://github.com/almma-ai/librechat-charter-diagnostic",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/almma-ai/librechat-charter-diagnostic.git"
+  },
+  "bin": {
+    "charter-diagnose": "bin/charter-diagnose.js"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "diagnose": "node bin/charter-diagnose.js",
+    "security-check": "bash scripts/security-check.sh --dynamic"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "optionalDependencies": {
+    "js-yaml": "^4.1.0",
+    "mongodb": "^6.14.2"
+  },
+  "keywords": [
+    "librechat",
+    "ai-agents",
+    "ai-governance",
+    "delegation-charter"
+  ]
+}

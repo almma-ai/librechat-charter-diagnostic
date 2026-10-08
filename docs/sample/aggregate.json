@@ -1,0 +1,210 @@
+{
+  "schema": "librechat-charter-diagnostic/aggregate/1",
+  "tool_version": "0.1.1",
+  "spec_version": "0.1.1",
+  "librechat_version": "v0.8.8-rc4",
+  "snapshot_utc": "2026-10-01",
+  "agents": 13,
+  "agents_used": 12,
+  "agents_shared": 10,
+  "agents_public": 1,
+  "agents_with_consequential_tools": 6,
+  "could_activate": 0,
+  "need_approval": 11,
+  "irreversible_unheld_agents": 6,
+  "owner_left": 1,
+  "changed_after_sharing": 5,
+  "header": {
+    "id_version": {
+      "met": 0,
+      "stated": 0,
+      "partial": 13,
+      "missing": 0,
+      "violated": 0,
+      "na": 0
+    },
+    "name_description": {
+      "met": 11,
+      "stated": 0,
+      "partial": 0,
+      "missing": 2,
+      "violated": 0,
+      "na": 0
+    },
+    "purpose": {
+      "met": 0,
+      "stated": 7,
+      "partial": 0,
+      "missing": 6,
+      "violated": 0,
+      "na": 0
+    },
+    "success_measure": {
+      "met": 0,
+      "stated": 1,
+      "partial": 0,
+      "missing": 12,
+      "violated": 0,
+      "na": 0
+    },
+    "review_date": {
+      "met": 0,
+      "stated": 0,
+      "partial": 0,
+      "missing": 13,
+      "violated": 0,
+      "na": 0
+    },
+    "state": {
+      "met": 0,
+      "stated": 0,
+      "partial": 0,
+      "missing": 13,
+      "violated": 0,
+      "na": 0
+    }
+  },
+  "pillars": {
+    "owner": {
+      "met": 0,
+      "stated": 0,
+      "partial": 12,
+      "missing": 0,
+      "violated": 1,
+      "na": 0
+    },
+    "escalation_recipient": {
+      "met": 0,
+      "stated": 3,
+      "partial": 0,
+      "missing": 10,
+      "violated": 0,
+      "na": 0
+    },
+    "approval_authority": {
+      "met": 0,
+      "stated": 0,
+      "partial": 0,
+      "missing": 11,
+      "violated": 0,
+      "na": 2
+    },
+    "scope": {
+      "met": 0,
+      "stated": 5,
+      "partial": 0,
+      "missing": 8,
+      "violated": 0,
+      "na": 0
+    },
+    "systems": {
+      "met": 3,
+      "stated": 0,
+      "partial": 10,
+      "missing": 0,
+      "violated": 0,
+      "na": 0
+    },
+    "inputs_outputs": {
+      "met": 7,
+      "stated": 0,
+      "partial": 0,
+      "missing": 6,
+      "violated": 0,
+      "na": 0
+    },
+    "escalation_rules": {
+      "met": 0,
+      "stated": 2,
+      "partial": 0,
+      "missing": 11,
+      "violated": 0,
+      "na": 0
+    },
+    "constraints": {
+      "met": 0,
+      "stated": 0,
+      "partial": 7,
+      "missing": 0,
+      "violated": 6,
+      "na": 0
+    }
+  },
+  "triggers": {
+    "out_of_scope": {
+      "met": 0,
+      "stated": 2,
+      "partial": 0,
+      "missing": 11,
+      "violated": 0,
+      "na": 0
+    },
+    "never_do_match": {
+      "met": 0,
+      "stated": 2,
+      "partial": 0,
+      "missing": 11,
+      "violated": 0,
+      "na": 0
+    },
+    "missing_required_input": {
+      "met": 0,
+      "stated": 2,
+      "partial": 0,
+      "missing": 11,
+      "violated": 0,
+      "na": 0
+    },
+    "irreversible_action": {
+      "met": 0,
+      "stated": 1,
+      "partial": 0,
+      "missing": 6,
+      "violated": 0,
+      "na": 6
+    }
+  },
+  "conformance": {
+    "reached": 0,
+    "checks": {
+      "capture_must_fields": "not_supported",
+      "refuse_incomplete": "not_supported",
+      "keep_versions": "partial",
+      "show_terms_to_users": "partial",
+      "deny_unlisted": "partial",
+      "enforce_never_do": "not_configured",
+      "route_escalations": "not_supported",
+      "hold_irreversible": "partial",
+      "approve_sharing": "not_supported",
+      "redraft_on_change": "not_supported",
+      "hook_runtime": "configured",
+      "link_records": "partial",
+      "flag_drift": "partial",
+      "review_prompts": "not_supported",
+      "independent_read": "partial"
+    }
+  },
+  "observations": {
+    "days": 7,
+    "records": 2883,
+    "runs": 485,
+    "tool_calls": 975,
+    "executed": 874,
+    "not_executed": 47,
+    "unlisted_tool_calls": 6,
+    "consequential_calls": 195,
+    "consequential_unheld": 178,
+    "agents_active": 10,
+    "unknown_agents": 0
+  },
+  "probes": {
+    "out_of_scope:held": 1,
+    "disclosure:held": 1,
+    "missing_required_input:held": 1,
+    "irreversible_action:held": 1,
+    "out_of_scope:answered": 1,
+    "disclosure:answered": 1,
+    "missing_required_input:answered": 1,
+    "irreversible_action:answered": 1
+  }
+}

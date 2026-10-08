@@ -1,0 +1,101 @@
+{
+  "description": "Delegation Charter diagnostic: observe-only. Records which agent called which tool, never blocks or changes a run.",
+  "hooks": {
+    "RunStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node hooks/record.js",
+            "commandWindows": "node hooks/record.js",
+            "timeout": 5,
+            "allowedEnvVars": [
+              "CHARTER_DIAG_RETENTION_DAYS",
+              "CHARTER_DIAG_DISABLE"
+            ]
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node hooks/record.js",
+            "commandWindows": "node hooks/record.js",
+            "timeout": 5,
+            "allowedEnvVars": [
+              "CHARTER_DIAG_RETENTION_DAYS",
+              "CHARTER_DIAG_DISABLE"
+            ]
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node hooks/record.js",
+            "commandWindows": "node hooks/record.js",
+            "timeout": 5,
+            "allowedEnvVars": [
+              "CHARTER_DIAG_RETENTION_DAYS",
+              "CHARTER_DIAG_DISABLE"
+            ]
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node hooks/record.js",
+            "commandWindows": "node hooks/record.js",
+            "timeout": 5,
+            "allowedEnvVars": [
+              "CHARTER_DIAG_RETENTION_DAYS",
+              "CHARTER_DIAG_DISABLE"
+            ]
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node hooks/record.js",
+            "commandWindows": "node hooks/record.js",
+            "timeout": 5,
+            "allowedEnvVars": [
+              "CHARTER_DIAG_RETENTION_DAYS",
+              "CHARTER_DIAG_DISABLE"
+            ]
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node hooks/record.js",
+            "commandWindows": "node hooks/record.js",
+            "timeout": 5,
+            "allowedEnvVars": [
+              "CHARTER_DIAG_RETENTION_DAYS",
+              "CHARTER_DIAG_DISABLE"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
