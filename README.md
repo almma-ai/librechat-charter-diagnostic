@@ -148,7 +148,7 @@ Each probe is one text-only message sent through LibreChat's Agents API (`/api/a
 
 Reading the v0.8.8-rc4 source while building this, three platform facts shape every report. They are offered as input for the [charter discussion](https://github.com/LibreChat-AI/LibreChat/discussions/16575), and `test/librechat-harness/setup.sh` reproduces the first against LibreChat's own code.
 
-1. **Command hooks fail open on the official image.** Plugin command hooks are spawned with `bash`; the image is Alpine without bash. The spawn error is logged as a warning and the tool call proceeds. The harness runs the same deny-guard twice through LibreChat's executor: with bash on PATH it denies, without bash the call goes through.
+1. **Command hooks fail open on the official image.** Plugin command hooks are spawned with `bash`; the image is Alpine without bash. The spawn error is logged as a warning and the tool call proceeds. The harness runs the same deny-guard twice through LibreChat's executor: with bash on PATH it denies; without bash, the call goes through. Reported as [#16923](https://github.com/LibreChat-AI/LibreChat/issues/16923).
 2. **Tool approval applies to chat runs only.** `toolApproval` rules and approval hook modules are attached only for callers that can pause; Agents API and Responses API runs take the no-approval path (`packages/api/src/agents/run.ts`). Plugin hooks do run on every path, where an `ask` becomes a `deny`.
 3. **The audit log does not yet record agent activity.** It is append-only and hash-chained, and defines `agent_run`, `tool_call` and `approval` categories, but the only actions written are grant and permission changes.
 
