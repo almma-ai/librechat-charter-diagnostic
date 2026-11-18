@@ -14,6 +14,7 @@ It is an [Agent Plugin](https://www.librechat.ai/docs/features/agent_plugins) yo
 - **Your deployment against the three conformance levels** (Declared, Enforced, Verified), with what would close each gap: a config change, a plugin, or a change to LibreChat itself.
 - **What agents actually did.** The plugin's hooks record which agent called which tool, never blocking anything, so the report can show write and irreversible calls that no approval rule covered, and tools used that are not on an agent's list.
 - **Optional live probes.** Four harmless text-only questions per agent you choose, testing the four escalation cases the spec names.
+- **Your gaps against the EU AI Act.** The same evidence read against the EU AI Act, ISO/IEC 42001 and the NIST AI RMF: one row per requirement (logging, log retention, human oversight, stop and override, change control and more), with the clauses it touches and what would close each gap. See [docs/FRAMEWORKS.md](docs/FRAMEWORKS.md); the mapping is not yet reviewed by a lawyer or auditor and is not legal advice.
 - **A draft charter for every agent** (`charters/<agent>.draft.json`), pre-filled with what could be inferred and listing exactly what a person still has to write.
 - **An anonymous aggregate** (`aggregate.json`): counts only, safe to share.
 
@@ -134,7 +135,7 @@ Each probe is one text-only message sent through LibreChat's Agents API (`/api/a
 
 **Hooks record:** event type, time, agent, tool name, and the *names* of tool arguments. Never prompts, argument values, outputs or user IDs; conversation and tool-call IDs are hashed. Records are kept 30 days (`CHARTER_DIAG_RETENTION_DAYS`), in `data/plugins/delegation-charter-diagnostic/observations/`. The hooks exit without a decision, so they never block, delay beyond process start-up (about 40 ms per event) or change a run. Set `CHARTER_DIAG_DISABLE=true` to pause recording.
 
-**Writes:** only the output folder.
+**Writes:** only the output folder (`report.html`, `report.json`, `framework-gaps.json`, `aggregate.json`, `charters/`).
 
 ## Reading the results
 

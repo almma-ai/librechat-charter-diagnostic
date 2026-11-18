@@ -22,7 +22,7 @@
  * Reads       .env, librechat.yaml, package.json files (to locate LibreChat),
  *             the --snapshot file, and this plugin's observation records.
  * Writes      only inside --out (default ./charter-report): report.html,
- *             report.json, aggregate.json, charters/*.draft.json, plus
+ *             report.json, aggregate.json, framework-gaps.json, charters/*.draft.json, plus
  *             snapshot.json with --save-snapshot. Files 0600, folders 0700.
  * Deletes     nothing.
  * Processes   none (no child_process, worker_threads or cluster).
@@ -31,6 +31,7 @@
  * Env vars    MONGO_URI, CONFIG_PATH, DEPLOYMENT_PLUGINS_DIR,
  *             DEPLOYMENT_PLUGIN_DATA_DIR, DEPLOYMENT_PLUGIN_HOOKS,
  *             USE_REDIS_STREAMS, CHARTER_DIAG_ADMIN, CHARTER_DIAG_API_KEY,
+ *             CHARTER_DIAG_RETENTION_DAYS (read as a number, for the EU AI Act log check),
  *             and PATH (to look for bash; bash is never run). .env is parsed
  *             in memory; no other value is used and none is written out
  *             (test: "secrets in .env and the environment never reach the output").
@@ -153,6 +154,7 @@ async function main() {
   const observations = summarize({ dir: obsDir, since: args.since, snap, policy: deployment.tool_approval, actionMethods: buildActionMethods(snap, yaml) });
   say(observations.present ? `  ${observations.totals.records} observer records since ${observations.window.first.slice(0, 10)}` : '  No observer records yet (install the plugin hooks to collect them)');
 
+  deployment.observer_retention_days = Number(env.CHARTER_DIAG_RETENTION_DAYS || 30);
   const now = new Date().toISOString();
   let result = diagnose({ snap, deployment, observations, borrowYaml: yaml, now });
 
@@ -175,6 +177,7 @@ async function main() {
   fs.mkdirSync(out, { recursive: true, mode: 0o700 });
   writeJson(path.join(out, 'report.json'), { ...result, drafts: undefined });
   writeJson(path.join(out, 'aggregate.json'), aggregate(result));
+  writeJson(path.join(out, 'framework-gaps.json'), result.frameworks);
   for (const d of result.drafts) writeJson(path.join(out, 'charters', `${d._diagnostic.agent_id}.draft.json`), d);
   fs.writeFileSync(path.join(out, 'report.html'), renderHtml(result), { mode: 0o600 });
   if (args['save-snapshot']) writeJson(path.join(out, 'snapshot.json'), snap);
@@ -185,11 +188,13 @@ async function main() {
   say(`Could be activated today: ${s.could_activate} of ${s.agents}`);
   say(`No never-do list:         ${s.no_never_do}`);
   say(`Irreversible, unheld:     ${s.irreversible_unheld_agents} agent(s)`);
+  const fg = result.frameworks.totals;
+  say(`EU AI Act / ISO 42001:   ${fg.gap} gaps, ${fg.partial} partial, ${fg.covered} covered, ${fg.not_assessed} not assessed (mapping ${result.frameworks.map_status})`);
   say(`Conformance level:        ${result.conformance.reached ? `Level ${result.conformance.reached}` : 'none reached'} (${result.conformance.levels.map((l) => `L${l.level} ${l.passing}/${l.total}`).join(', ')})`);
   say('');
   process.stdout.write(`${path.join(out, 'report.html')}\n`);
   if (!args.quiet) {
-    say(`Also: report.json, aggregate.json (counts only, safe to share), charters/*.draft.json`);
+    say(`Also: report.json, framework-gaps.json, aggregate.json (counts only, safe to share), charters/*.draft.json`);
   }
 }
 

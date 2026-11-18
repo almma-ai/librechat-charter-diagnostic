@@ -1,6 +1,6 @@
 {
   "name": "librechat-charter-diagnostic",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Tests a LibreChat deployment against the Delegation Charter Specification: every agent against the eight pillars, the deployment against conformance Levels 1-3, with observe-only plugin hooks.",
   "license": "MIT",
   "author": "Almma.AI",
@@ -28,6 +28,9 @@
     "librechat",
     "ai-agents",
     "ai-governance",
-    "delegation-charter"
+    "delegation-charter",
+    "eu-ai-act",
+    "iso-42001",
+    "nist-ai-rmf"
   ]
 }
