@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0 (2026-11-18)
+
+- New report section, *Your gaps against the EU AI Act*: the same evidence read against the EU AI Act (as amended by Regulation (EU) 2026/1744), ISO/IEC 42001 Annex A and NIST AI RMF 1.0, one row per requirement, each Gap, Partial, Evidence found or Not assessed.
+- New output `framework-gaps.json`; `aggregate.json` adds the status of each row (counts only).
+- docs/FRAMEWORKS.md publishes the mapping. It is marked unreviewed until a qualified person has checked it clause by clause.
+- Reads `CHARTER_DIAG_RETENTION_DAYS` to test observer log retention against the six-month minimum in Art. 26(6).
+
 ## 0.1.1 (2026-10-01)
 
 - Every file that runs now starts with a SECURITY REVIEW header: a checkable claim of what it touches (network, database, files, processes, dynamic code, environment).

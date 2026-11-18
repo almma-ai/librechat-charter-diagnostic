@@ -259,3 +259,36 @@ test('only mongodb and js-yaml can be borrowed from the LibreChat install', () =
   assert.throws(() => borrow('child_process'), /Refusing to load/);
   assert.throws(() => borrow('../outside/module'), /Refusing to load/);
 });
+
+test('EU AI Act gaps: every row evaluates, retention below six months is a gap, no agent names leak', async () => {
+  const { snap } = await demo();
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'obs-'));
+  simulate(dir);
+  const observations = summarize({ dir: path.join(dir, 'observations'), since: '3650d', snap, policy: DEPLOYMENT.tool_approval });
+  const r = diagnose({ snap, deployment: { ...DEPLOYMENT, observer_retention_days: 30 }, observations });
+  const f = r.frameworks;
+  assert.equal(f.map_status, 'unreviewed');
+  const allowed = new Set(['covered', 'partial', 'gap', 'not_assessed']);
+  for (const row of f.rows) {
+    assert.ok(allowed.has(row.status), `${row.key}: ${row.status}`);
+    assert.ok(!/Could not be evaluated/.test(row.finding), `${row.key} threw: ${row.finding}`);
+    assert.ok(row.eu.length > 0, `${row.key} cites the Act`);
+  }
+  const by = (k) => f.rows.find((x) => x.key === k);
+  assert.equal(by('log_retention').status, 'gap');
+  assert.equal(by('stop_override').status, 'gap', 'finance_ops holds an unheld irreversible tool');
+  assert.equal(by('change_control').status, 'gap', 'finance_ops changed after sharing');
+  const ok = diagnose({ snap, deployment: { ...DEPLOYMENT, observer_retention_days: 200 }, observations });
+  assert.equal(ok.frameworks.rows.find((x) => x.key === 'log_retention').status, 'covered');
+  const none = diagnose({ snap, deployment: DEPLOYMENT, observations: { present: false } });
+  assert.equal(none.frameworks.rows.find((x) => x.key === 'logging').status, 'gap');
+  const json = JSON.stringify(f) + JSON.stringify(aggregate(r));
+  for (const a of snap.agents) if (a.name && a.name.length > 4) assert.ok(!json.includes(a.name), `no agent names (${a.name})`);
+  assert.ok(renderHtml(r).includes('id="eu-ai-act"'));
+});
+
+test('docs/FRAMEWORKS.md lists every requirement the code evaluates', () => {
+  const { REQUIREMENTS } = require('../lib/frameworks');
+  const md = fs.readFileSync(path.join(__dirname, '..', 'docs', 'FRAMEWORKS.md'), 'utf8');
+  for (const q of REQUIREMENTS) assert.ok(md.includes(q.title), `missing: ${q.title}`);
+});
